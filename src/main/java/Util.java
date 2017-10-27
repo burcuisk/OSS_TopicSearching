@@ -27,16 +27,14 @@ public class Util {
             addDatabase(gitHubDatasOnOnePage.get(i),db);
         }
         int j;
-       /* while(true) {
+        while(!(gitHubDatasOnOnePage == null || gitHubDatasOnOnePage.size() == 0)) {
             j = Integer.parseInt(gitHubDatasOnOnePage.get(gitHubDatasOnOnePage.size()-1)[0])+1;
             gitHubDatasOnOnePage = getGitRepositoryDatas(j);
-            if(gitHubDatasOnOnePage == null || gitHubDatasOnOnePage.size() == 0 )
-                break;
 
             for (i =0 ; i<gitHubDatasOnOnePage.size() ; i++) {
                 addDatabase(gitHubDatasOnOnePage.get(i),db);
             }
-        }*/
+        }
 
 
     }
