@@ -116,7 +116,7 @@ public class Util {
             String inputLine;
 
             while ((inputLine = in.readLine()) != null) {
-                JSONObject a = (JSONObject) parser.parse(inputLine);;
+                JSONObject a = (JSONObject) parser.parse(inputLine);
                  topics = ""+a.values();
 
                  // düzeltilcek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
