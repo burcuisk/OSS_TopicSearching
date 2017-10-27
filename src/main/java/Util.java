@@ -44,8 +44,8 @@ public class Util {
     }
 
     public static ArrayList<String[]> getGitRepositoryDatas(long i) {
+
         ArrayList<String[]> dataListOnePage=new ArrayList<String[]>();
-       // String [] datas = new String[4];
         JSONParser parser = new JSONParser();
 
         try {
@@ -88,7 +88,6 @@ public class Util {
                     datas[1] = html_url;
 
                     dataListOnePage.add(datas);
-                    System.out.print("geldis");
 
                     System.out.println("\n");
                 }
@@ -118,8 +117,9 @@ public class Util {
 
             while ((inputLine = in.readLine()) != null) {
                 JSONObject a = (JSONObject) parser.parse(inputLine);;
-                // System.out.println("Post ID : " + a.toJSONString());
                  topics = ""+a.values();
+
+                 // düzeltilcek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                  topics = topics.replaceAll("[\"]" ,"");
                  System.out.println("topics:" + topics);
 
