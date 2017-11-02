@@ -9,6 +9,7 @@ public class DbHelper {
 
     // database connection
     public DbHelper() throws ClassNotFoundException, SQLException {
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
         } catch (InstantiationException e) {
@@ -26,17 +27,18 @@ public class DbHelper {
 
     }
 
-    public void addTable (long id,String url,String topics,String description) throws SQLException {
+    public void addTable (long id,String url,String topics,String description,String pl) throws SQLException {
 
-        String query = " insert into github_repository (id, url, topics, description)"
-                + " values (?, ?, ?, ?)";
-
+        String query = " insert into github_repository (id, url, topics, description,pl)"
+                + " values (?, ?, ?, ?,?)";
+        System.out.println("gelen id = "+ id);
         // create the mysql insert preparedstatement
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setDouble (1, id);
         preparedStmt.setString (2, url);
         preparedStmt.setString (3, topics);
         preparedStmt.setString(4, description);
+        preparedStmt.setString(5,pl);
 
         // execute the preparedstatement
         preparedStmt.execute();

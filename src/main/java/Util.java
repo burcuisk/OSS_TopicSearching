@@ -22,10 +22,10 @@ public class Util {
         int i;
         ArrayList<String[]> gitHubDatasOnOnePage ;
         gitHubDatasOnOnePage = getGitRepositoryDatas(1);
-        System.out.print(gitHubDatasOnOnePage.get(gitHubDatasOnOnePage.size()-8)[1]);
-        for (i =0 ; i<gitHubDatasOnOnePage.size() ; i++) {
+        System.out.println(gitHubDatasOnOnePage.size());
+        for (i = 0 ; i<gitHubDatasOnOnePage.size() ; i++)
             addDatabase(gitHubDatasOnOnePage.get(i),db);
-        }
+
         int j;
         while(!(gitHubDatasOnOnePage == null || gitHubDatasOnOnePage.size() == 0)) {
             j = Integer.parseInt(gitHubDatasOnOnePage.get(gitHubDatasOnOnePage.size()-1)[0])+1;
@@ -40,7 +40,7 @@ public class Util {
     }
 
     public static void addDatabase (String[] databaseColumns, DbHelper db) throws SQLException {
-        db.addTable(Long.parseLong(databaseColumns[0]),databaseColumns[1],databaseColumns[2],databaseColumns[3]);
+        db.addTable(Long.parseLong(databaseColumns[0]),databaseColumns[1],databaseColumns[2],databaseColumns[3],databaseColumns[4]);
     }
 
     public static ArrayList<String[]> getGitRepositoryDatas(long i) {
@@ -60,7 +60,7 @@ public class Util {
 
                 // Loop through each item
                 for (Object o : a) {
-                    String[] datas = new String[4];
+                    String[] datas = new String[5];
                     JSONObject tutorials = (JSONObject) o;
 
                     // get topics of the repo if no topics continue
@@ -73,8 +73,11 @@ public class Util {
 
                     // if no description and no topics for repository no db process
                     System.out.println(datas[2]+ "  -  "+datas[3]);
-                    if(datas[2].equals("[[]]") && (datas[3] == null || datas[3].equals("")) )
+                    if(datas[2]== null && (datas[3] == null || datas[3].equals("")) )
                         continue;
+
+                    // get repo language
+                    datas[4] = getLanguage(ownerRepo);
 
                     // get id of repo
                     Long id = (Long) tutorials.get("id");
@@ -104,6 +107,52 @@ public class Util {
         return dataListOnePage;
     }
 
+    public static String getLanguage(String ownerRepo) {
+        String language ="";
+        JSONParser parser = new JSONParser();
+        try {
+            URL github = new URL("https://api.github.com/repos/" + ownerRepo + "/languages?access_token=02da237edfc9776e04677f03997351f7be34eacf"); // URL to Parse
+            URLConnection yc = github.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                JSONObject a = (JSONObject) parser.parse(inputLine);
+                String lan = a.toString().replaceAll("[\"]","");
+                lan = lan.toString().replaceAll("[{}]","");
+                lan = lan.toString().replaceAll(":"," ");
+
+                String langs[] = lan.split(",");
+
+                double max=0;
+                for ( int i= 0; i<a.size(); i++) {
+                   String data[] = langs[i].split(" ");
+
+                   if (max < Double.parseDouble(data[data.length-1])) {
+                       language ="";
+                       max = Double.parseDouble(data[data.length-1]);
+                       for (int k=0; k<data.length-1 ; k++) {
+                           if (k == data.length-2)
+                               language += data[k];
+                           else
+                               language += data[k]+" ";
+                       }
+
+                   }
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return language;
+    }
+
     public static String getTopics(String ownerRepo) throws IOException, ParseException {
         String topics="";
         JSONParser parser = new JSONParser();
@@ -117,10 +166,13 @@ public class Util {
 
             while ((inputLine = in.readLine()) != null) {
                 JSONObject a = (JSONObject) parser.parse(inputLine);
-                 topics = ""+a.values();
+                topics = ""+a.values();
 
-                 // düzeltilcek !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                 topics = topics.replaceAll("[\"]" ,"");
+                topics = topics.replaceAll("[\"]" ,"");
+                topics = topics.replaceAll("]" ,"");
+                topics = topics.replaceAll("\\[" ,"");
+
+                if (topics.equals("")) topics = null;
                  System.out.println("topics:" + topics);
 
             }
