@@ -24,13 +24,30 @@ public class readFromSource {
         Elements link = project.select("a[href]");
         Elements description = project.select("p[itemprop=description]");
 
+
         ArrayList<HashMap<String,String>> all = new ArrayList<HashMap<String,String>>();
 
         for(int x = 0; x < project.size(); x++){
             HashMap projectAttributes = new HashMap();
             projectAttributes.put("Name", name.get(x).text());
             projectAttributes.put("Description", description.get(x).text());
-            projectAttributes.put("Link", "https://sourceforge.net/directory"+link.get(x).toString().split("\"")[1]);
+            projectAttributes.put("Link", "https://sourceforge.net"+link.get(x).toString().split("\"")[1]);
+
+            url = "https://sourceforge.net"+link.get(x).toString().split("\"")[1];
+            doc = Jsoup.connect(url).followRedirects(true).referrer("http://www.google.com")
+                    .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                    //.timeout(0)
+                    .get();
+
+            Elements pfeatures = doc.select("section[id=project-features]");
+            Elements features = pfeatures.select("ul[class=features]");
+            Elements categories = doc.select("div.project-container");
+            Elements pinfo = doc.select("section.project-info");
+            Elements PL = pinfo.select("section.content");
+
+            projectAttributes.put("Features", features.text());
+            projectAttributes.put("Categories", categories.text());
+            projectAttributes.put("PL", PL.text());
 
             all.add(projectAttributes);
         }
