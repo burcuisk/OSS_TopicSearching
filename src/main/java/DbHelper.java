@@ -31,7 +31,7 @@ public class DbHelper {
 
         String query = " insert into github_repository (id, url, topics, description,pl)"
                 + " values (?, ?, ?, ?,?)";
-        System.out.println("gelen id = "+ id);
+
         // create the mysql insert preparedstatement
         PreparedStatement preparedStmt = conn.prepareStatement(query);
         preparedStmt.setDouble (1, id);
