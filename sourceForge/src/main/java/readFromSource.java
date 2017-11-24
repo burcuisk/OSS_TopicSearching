@@ -1,3 +1,9 @@
+//
+//  readFromSource.java
+//  sourceForge
+//
+//  Created by sule
+//
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +32,6 @@ public class readFromSource {
 
 
         ArrayList<HashMap<String,String>> all = new ArrayList<HashMap<String,String>>();
-
         for(int x = 0; x < project.size(); x++){
             HashMap projectAttributes = new HashMap();
             projectAttributes.put("Name", name.get(x).text());
@@ -41,13 +46,23 @@ public class readFromSource {
 
             Elements pfeatures = doc.select("section[id=project-features]");
             Elements features = pfeatures.select("ul[class=features]");
-            Elements categories = doc.select("div.project-container");
-            Elements pinfo = doc.select("section.project-info");
-            Elements PL = pinfo.select("section.content");
+            Elements pcategories = doc.select("section[id=project-categories-and-license]");
+            Elements categories = pcategories.select("a[itemprop=softwareApplicationSubCategory]");
+            Elements PLs = doc.select("section[class=project-info]");
+            Elements PL = null;
+
+            for(int i = 0; i < PLs.size(); i++){
+                if(PLs.get(i).select("header > h3").text().equals("Programming Language")) {
+                    PL = PLs.get(i).select("a[href]");
+                }
+            }
 
             projectAttributes.put("Features", features.text());
             projectAttributes.put("Categories", categories.text());
-            projectAttributes.put("PL", PL.text());
+            if(PL != null)
+                projectAttributes.put("PL", PL.text());
+            else
+                projectAttributes.put("PL", "");
 
             all.add(projectAttributes);
         }

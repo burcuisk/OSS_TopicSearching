@@ -1,3 +1,9 @@
+//
+//  readAllPages.java
+//  sourceForge
+//
+//  Created by sule
+//
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,9 +15,11 @@ public class readAllPages {
         String url;
         ArrayList<HashMap<String,String>> page = new ArrayList<HashMap<String, String>>();
 
-        for(int pageNumber=0; pageNumber <= 4; pageNumber++) {
+        for(int pageNumber=5; pageNumber <= 5; pageNumber++) {
+            System.out.println("pagenumber:" + pageNumber);
             url = rootURL+"?page="+Integer.toString(pageNumber+1);
-             page.addAll(readerF.getUrlSource(url));
+            System.out.println(url);
+            page.addAll(readerF.getUrlSource(url));
         }
 
         for(int i = 0; i < page.size(); i++){
