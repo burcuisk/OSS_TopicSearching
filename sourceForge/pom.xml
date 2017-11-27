@@ -6,9 +6,13 @@
 
     <groupId>sourceForge</groupId>
     <artifactId>sourceForge</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>..</module>
+    </modules>
 
-<dependencies>
+    <dependencies>
     <dependency>
         <!-- jsoup HTML parser library @ https://jsoup.org/ -->
         <groupId>org.jsoup</groupId>
