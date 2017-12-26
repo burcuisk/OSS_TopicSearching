@@ -9,83 +9,66 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>OSS Topic Search</title>     
         <link href="index.css" rel="stylesheet" type="text/css">
+		<script src="jquery-3.2.1.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
     </head>
-    
-    <body>
-    	<h1>Open Source Software Products</h1>
-    	<h2>Topic Search</h2>
-		<form id="topics" action="GetParameters" method="post">
-			<div id="topic">
-				Enter Topics: <input type="text" name="topic"><br>
+
+	<body>
+	<div class="jumbotron" style="background-image:url('background.png');">
+		<h1 style="text-align:center">OSS Topic Searching</h1>
+		<p style="text-align:center">This system support two websites for now.</p>
+	</div>
+
+	<div class="container" id="search">
+		<form action="GetParameters" method="post">
+
+			<div class="form-group">
+				<label for="repos">Select Website</label>
+				<select class="form-control" id="repos" name="repo">
+					<option value="github">GitHub</option>
+					<option value="sourceforge">SourceForge</option>
+				</select>
 			</div>
+
+			<div class="form-group">
+				<label for="exampleFormControlTextarea1">Features</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="topic"></textarea>
+			</div>
+
+			<div class="form-group">
+				<label for="exampleFormControlTextarea1">Select Language: </label>
+				<label class="radio-inline"><input type="radio" name="pl" value="C">C</label>
+				<label class="radio-inline"><input type="radio" name="pl" value="java">Java</label>
+				<label class="radio-inline"><input type="radio" name="pl" value="PHP">PHP</label>
+
+			</div>
+
+			<button type="submit"  class="btn btn-primary btn-md" style="margin-left:40%;"><span class="glyphicon glyphicon-search"></span>&nbsp Search</button>
+
+		</form>
+	</div>
+
+	<table>
+		<c:forEach items="${results}" var="result">
+			<c:out value="${result}"></c:out>
 			<br>
-  			<div id="repos">
-             	<label>OSS repository:</label>
-             	<select name="repo">
-               	<option value = "GitHub">GitHub</option>
-               	<option value = "SourceForge">SourceForge</option>
-            	 </select>
-   			</div>
-   			<br>
-   			<div id="PL">
-  				<label>Programming Language:</label>
-          		<br>
-    			<input id="pl1" type = "checkbox" name = "pl" value="C" /> C        
-    			<input id="pl2" type = "checkbox" name = "pl" value="C++" /> C++	      
-    			<input id="pl" type = "checkbox" name = "pl" value="Java" /> Java	      
-    			<input id="pl" type = "checkbox" name = "pl" value="UnixShell" /> UnixShell	 
-        		<br>
-    			<input id="pl1" type = "checkbox" name = "pl" value="Python" /> Python	
-    			<input id="pl2" type = "checkbox" name = "pl" value="C#" /> C#	
-    			<input id="pl" type = "checkbox" name = "pl" value="Perl" /> Perl	
-    			<input id="pl" type = "checkbox" name = "pl" value="Matlab" /> Matlab	
-        		<br>
-    			<input id="pl1" type = "checkbox" name = "pl" value="VisualBasic" /> VisualBasic	
-    			<input id="pl2" type = "checkbox" name = "pl" value="Ada" /> Ada	
-    			<input id="pl" type = "checkbox" name = "pl" value="JavaScript" /> JavaScript	
-    			<input id="pl" type = "checkbox" name = "pl" value="PL/SQL" /> PL/SQL	
-        		<br>
-    			<input id="pl1" type = "checkbox" name = "pl" value="AppleScript" /> AppleScript	
-    			<input id="pl2" type = "checkbox" name = "pl" value="PHP" /> PHP	
-    			<input id="pl" type = "checkbox" name = "pl" value="Ruby" /> Ruby	
-    			<input id="pl" type = "checkbox" name = "pl" value="Delphi/Kylix" /> Delphi/Kylix	
-        		<br>
-        	</div>
-        	<div id="category">
-        	  	<label>Categories:</label>
-        	  	<br>
-        		<input id="cat1" type = "checkbox" name = "cat" value="Modeling" /> Modeling
-        		<input id="cat" type = "checkbox" name = "cat" value="WindowManagers" /> Window Managers
-        		<input id="cat" type = "checkbox" name = "cat" value="Scheduling" /> Scheduling
-        		<input id="cat" type = "checkbox" name = "cat" value="Software" /> Software
-        		<br>
-        		<input id="cat1" type = "checkbox" name = "cat" value="Visualization" /> Visualization
-        		<input id="cat" type = "checkbox" name = "cat" value="Web Services" /> Web Services
-        		<input id="cat" type = "checkbox" name = "cat" value="Systems Administration" /> Systems Administration
-        		<input id="cat" type = "checkbox" name = "cat" value="Simulation" /> Simulation
-        		<br>
-        		<input id="cat1" type = "checkbox" name = "cat" value="Workflow" /> Workflow
-        		<input id="cat" type = "checkbox" name = "cat" value="Video" /> Video
-        		<input id="cat" type = "checkbox" name = "cat" value="Storage" /> Storage
-        		<input id="cat" type = "checkbox" name = "cat" value="Scientific/Engineering" /> Scientific/Engineering
-        		<br>
-        		<input id="cat1" type = "checkbox" name = "cat" value="Text" /> Text
-        		<input id="cat" type = "checkbox" name = "cat" value="UserInterface" /> User Interface
-        		<input id="cat" type = "checkbox" name = "cat" value="Sound/Audio" /> Sound/Audio
-        		<input id="cat" type = "checkbox" name = "cat" value="ObjectOriented" /> Object Oriented
-        		<br>
-        	</div>
-        	<input id="submit1" type = "submit" value = "Search" />
-		</form> 
-	
-		<table>
-    		<c:forEach items="${results}" var="result">
-        		<c:out value="${result}"></c:out>
-        		<br>
-    		</c:forEach>
-		</table>   
-	  
-	
+		</c:forEach>
+	</table>
+
+	<!-- <div id="loader" style="position:absolute; margin-left:42%;">
+		<div class="loader"></div>Searching -->
+
+		<footer>
+			<p>©2017<a style="color:#0a93a6; text-decoration:none;" href="#">  HacettepeUniversity</a>.All rights reserved.</p>
+		</footer>
+
 	</body>
 	
 	

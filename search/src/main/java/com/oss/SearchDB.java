@@ -13,6 +13,7 @@ class SearchDB {
 	String repository;
 	String[] PL;
 	String[] category;
+
 	SearchDB(String topic, String repository, String[] PL, String[] category) {
 		// TODO Auto-generated constructor stub
 		this.topic = topic;
