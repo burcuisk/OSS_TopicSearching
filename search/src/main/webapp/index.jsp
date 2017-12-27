@@ -19,7 +19,7 @@
 
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+		
     </head>
 
 	<body>
@@ -35,8 +35,8 @@
 			<div class="form-group">
 				<label for="repos">Select Website</label>
 				<select class="form-control" id="repos" name="repo">
-					<option value="github">GitHub</option>
-					<option value="sourceforge">SourceForge</option>
+					<option value="github" onclick="showstuff('pls');">GitHub</option>
+					<option value="sourceforge" onclick="hidestuff('pls');">SourceForge</option>
 				</select>
 			</div>
 
@@ -45,7 +45,7 @@
 				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="topic"></textarea>
 			</div>
 
-			<div class="form-group">
+			<div class="form-group" id="pls">
 				<label for="exampleFormControlTextarea1">Select Language: </label>
 				<label class="radio-inline"><input type="radio" name="pl" value="C">C</label>
 				<label class="radio-inline"><input type="radio" name="pl" value="java">Java</label>
@@ -84,9 +84,15 @@
             var y = document.getElementById("search");
             y.style.display= "none";
         }
+        function showstuff(boxid){
+			document.getElementById(boxid).style.visibility="visible";
+		}
+			 
+		function hidestuff(boxid){
+			document.getElementById(boxid).style.visibility="hidden";
+		}
 	</script>
 	
 	
 </html>
-
 
