@@ -23,7 +23,7 @@
 	<body>
 	<div class="jumbotron" style="background-image:url('background.png');">
 		<h1 style="text-align:center">OSS Topic Searching</h1>
-		<p style="text-align:center">This system support two websites for now.</p>
+		<p style="text-align:center">This system supports two websites for now.</p>
 	</div>
 
 	<div class="container" id="search">
@@ -47,7 +47,8 @@
 				<label class="radio-inline"><input type="radio" name="pl" value="C">C</label>
 				<label class="radio-inline"><input type="radio" name="pl" value="java">Java</label>
 				<label class="radio-inline"><input type="radio" name="pl" value="PHP">PHP</label>
-
+				<label class="radio-inline"><input type="radio" name="pl" value="Python">Python</label>
+				
 			</div>
 
 			<button type="submit"  class="btn btn-primary btn-md" style="margin-left:40%;"><span class="glyphicon glyphicon-search"></span>&nbsp Search</button>
@@ -57,8 +58,11 @@
 
 	<table>
 		<c:forEach items="${results}" var="result">
-			<c:out value="${result}"></c:out>
+			<c:out value="${result[0]} "></c:out>
+			<c:out value="${result[1]} "></c:out>
 			<br>
+			<c:out value="${result[2]}"></c:out>
+			<br><br>
 		</c:forEach>
 	</table>
 
@@ -66,7 +70,7 @@
 		<div class="loader"></div>Searching -->
 
 		<footer>
-			<p>©2017<a style="color:#0a93a6; text-decoration:none;" href="#">  HacettepeUniversity</a>.All rights reserved.</p>
+			<p>©2017<a style="color:#0a93a6; text-decoration:none;" href="#">  HacettepeUniversity</a>. All rights reserved.</p>
 		</footer>
 
 	</body>
