@@ -1,3 +1,5 @@
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.GregorianCalendar" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
@@ -21,9 +23,10 @@
     </head>
 
 	<body>
+
 	<div class="jumbotron" style="background-image:url('background.png');">
 		<h1 style="text-align:center">OSS Topic Searching</h1>
-		<p style="text-align:center">This system supports two websites for now.</p>
+		<p style="text-align:center">This system support two websites for now.</p>
 	</div>
 
 	<div class="container" id="search">
@@ -47,11 +50,10 @@
 				<label class="radio-inline"><input type="radio" name="pl" value="C">C</label>
 				<label class="radio-inline"><input type="radio" name="pl" value="java">Java</label>
 				<label class="radio-inline"><input type="radio" name="pl" value="PHP">PHP</label>
-				<label class="radio-inline"><input type="radio" name="pl" value="Python">Python</label>
-				
+
 			</div>
 
-			<button type="submit"  class="btn btn-primary btn-md" style="margin-left:40%;"><span class="glyphicon glyphicon-search"></span>&nbsp Search</button>
+			<button type="submit"  onclick="showloader();" class="btn btn-primary btn-md" style="margin-left:40%;"><span class="glyphicon glyphicon-search"></span>&nbsp Search</button>
 
 		</form>
 	</div>
@@ -66,14 +68,23 @@
 		</c:forEach>
 	</table>
 
-	<!-- <div id="loader" style="position:absolute; margin-left:42%;">
-		<div class="loader"></div>Searching -->
+	 <div id="loader" style="position:absolute; margin-left:42%; display:none;">
+		<div class="loader"></div>Searching Please Wait
 
 		<footer>
-			<p>©2017<a style="color:#0a93a6; text-decoration:none;" href="#">  HacettepeUniversity</a>. All rights reserved.</p>
+			<p>©2017<a style="color:#0a93a6; text-decoration:none;" href="#">  HacettepeUniversity</a>.All rights reserved.</p>
 		</footer>
 
 	</body>
+
+	<script>
+        function showloader() {
+            var x = document.getElementById("loader");
+            x.style.display ="block";
+            var y = document.getElementById("search");
+            y.style.display= "none";
+        }
+	</script>
 	
 	
 </html>
