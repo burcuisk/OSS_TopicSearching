@@ -35,7 +35,7 @@ public class DbHelper {
 
     // select statements range of 1000 id rows for all request
     public ArrayList<ArrayList<String>> selectRowsGithub (String pl) {
-        System.out.println("database geldik : sorgu yapcaz");
+
         ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
         ArrayList<String> repo;
         System.out.println(lastSelectionId);
@@ -77,11 +77,46 @@ public class DbHelper {
     }
 
     // select statements limit 1000 row for all request
-    public ArrayList<String> selectRowsSourceForge () {
-        ArrayList<String> datas = null;
+    public ArrayList<ArrayList<String>> selectRowsSourceForge (String pl) {
+        ArrayList<ArrayList<String>> datas = new ArrayList<ArrayList<String>>();
+        ArrayList<String> repo;
+        System.out.println(lastSelectionId);
+        String query = "SELECT * FROM sourceforge LIMIT " + lastSelectionId + "," + 1000;
+        //        String query = "SELECT * FROM sourceforge where pl LIKE '%"+pl +"' or pl LIKE '%"+pl+" '"+ " LIMIT " + lastSelectionId + "," + 1000;
 
+        Statement st = null;
+        try {
+            st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
 
-        // lastSelectionId  = lastRepoId
+            while (rs.next()) {
+                repo = new ArrayList<String>();
+                int id_g = rs.getInt("id");
+                String repoUrl = rs.getString("url");
+                String description = rs.getString("description");
+                String features = rs.getString("features");
+                String topics = rs.getString("topics");
+
+                description += " " +topics + " " + features;
+
+                repo.add(Integer.toString(id_g));
+                repo.add(repoUrl);
+                repo.add(description);
+
+                datas.add(repo);
+            }
+            lastSelectionId +=1000;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if(st != null)
+                try {
+                    st.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+        }
         return datas;
     }
+
  }

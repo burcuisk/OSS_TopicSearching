@@ -1,5 +1,7 @@
 package com.oss;
 
+import org.omg.CORBA.StringHolder;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,67 +24,93 @@ public class NLPProcesses {
             "whom","why","with","would","you","your","yourself","yourselves"  };
 
     public static final Set <String> STOP_WORDS = new HashSet<String>(Arrays.asList(SET_VALUES));
-    public static final double minProbabilitySourceforge = 0.5;
-    public static final double minProbabilityGithub = 0.2;
+    public static double minProbability ;
+    public static String dbFunction;
 
     DbHelper db = new DbHelper();
+    Repository repo = null;
 
     public NLPProcesses() throws SQLException, ClassNotFoundException {}
 
-    public ArrayList<ArrayList<String>> processAndResults (String topics, String pl,String website) {
-        System.out.println("process edek" + pl);
+    public ArrayList<ArrayList<String >> processAndResults (String topics, String pl,String website) {
         db.lastSelectionId = 1;
-       ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
+        ArrayList<Repository> result = new ArrayList<Repository>();
+        setRepoSettings(website);
 
        //drop stop punctations get stem and drop stop words
         Set <String> rowTopics = dropStopWords(dropPunctations(topics));
 
+        // test set (database datas) fetch 1000 for all loop
+        // yukarıda yapılan işlemler tekrarlanıp row data her bir satır için
+        while (true) {
+            ArrayList<ArrayList<String>> datas;
+            if (website.equalsIgnoreCase("github"))
+                datas = db.selectRowsGithub(pl);
+            else
+                datas = db.selectRowsSourceForge(pl);
 
-        if (website.equalsIgnoreCase("github")) {
-            // test set (database datas) fetch 1000 for all loop
-            // yukarıda yapılan işlemler tekrarlanıp row data her bir satır için
-            while (true) {
-                System.out.println("github database veri çekyozzz");
-                ArrayList<ArrayList<String>> datas = db.selectRowsGithub(pl);
-                System.out.println("çektik bu kadar : " + datas.size() + ":");
-                // db row bitti sonucu döndür
-                if (datas.size () == 0)
-                    return result;
+            // db row bitti sonucu döndür
+            if (datas.size () == 0)
+                return sortByProbability(result);
 
-                else {
-                    for (int i = 1; i< datas.size() ; i++ ) {
-                        System.out.println("jaccarda gidiyoz");
-                        // get description process it get set of words
-                        Set <String> rowDescription = dropStopWords(dropPunctations(datas.get(i).get(2)));
+            else {
+                for (int i = 1; i< datas.size() ; i++ ) {
+                    System.out.println("jaccarda gidiyoz");
+                    // get description process it get set of words
+                    Set <String> rowDescription = dropStopWords(dropPunctations(datas.get(i).get(2)));
 
-                        double prob = JaccardIndex(rowDescription,rowTopics);
+                    double prob = JaccardIndex(rowDescription,rowTopics);
 
-                        System.out.println(prob);
+                    System.out.println(prob);
 
-                        if (prob >=  minProbabilityGithub) {
-                            result.add(datas.get(i));
-                        }
+                    if (prob >=  minProbability) {
+                        repo = new Repository();
+                        repo.probability = prob;
+                        repo.repo_url = datas.get(i).get(1);
+                        result.add(repo);
                     }
+                }
 
+            }
+        }
+    }
+
+    public void setRepoSettings (String website) {
+        if (website.equalsIgnoreCase("sourceforge")) {
+            minProbability = 0.1;
+        }
+        else {
+            minProbability= 0.2;
+        }
+
+    }
+
+    public ArrayList<ArrayList<String >> sortByProbability (ArrayList<Repository> result) {
+        int min;
+        ArrayList<ArrayList<String >> res = new ArrayList<ArrayList<String>>();
+        ArrayList<String> a ;
+        for (int i = 0; i < result.size(); i++) {
+            // Assume first element is min
+            min = i;
+            for (int j = i + 1; j < result.size(); j++) {
+                if (result.get(j).probability < result.get(min).probability) {
+                    min = j;
                 }
             }
-
-
+            if (min != i) {
+                final Repository temp = result.get(i);
+                result.set(i, result.get(min));
+                result.set(min, temp);
+            }
         }
 
-
-        else if(website.equalsIgnoreCase("sourceForge")) {
-            // test set (database datas) fetch 5000 for all loop
+        for (int i = result.size()-1 ; i>0 ; i--) {
+            a = new ArrayList<String>();
+            a.add(result.get(i).repo_url);
+            a.add(Double.toString(result.get(i).probability));
+            res.add(a);
         }
-
-
-
-
-
-       ArrayList<String> topicStems = new ArrayList<String>();
-
-
-       return result;
+        return res;
     }
 
     public Set<String> dropStopWords( Set<String> topics) {
