@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class GetParameters extends HttpServlet {
@@ -36,20 +39,16 @@ public class GetParameters extends HttpServlet {
         String repository = request.getParameter("repo");
         String selectedPL = request.getParameter("pl");
         String topics = request.getParameter("topic");
-        //String categories[] = request.getParameterValues("cat");
 
-        System.out.println("Repo: " + repository);
-        System.out.println("PL: " + selectedPL);
-        System.out.println("Features: " + topics);
-
-        ArrayList<ArrayList<String >> results = process.processAndResults(topics,selectedPL,repository);
-        //request.setAttribute("repo", repository);
-        //request.setAttribute("pls", selectedPL);
-        //request.setAttribute("topic", topics);
+        ArrayList<ArrayList<String>> results = process.processAndResults(topics,selectedPL,repository);
         
-      //  SearchDB search = new SearchDB(topics, repository, selectedPL, categories);
-       //; ArrayList<String> results = search.getResults();
-
+        int numberOfResults = results.size();
+        ArrayList<String> firstLine = new ArrayList<String>();
+        firstLine.add(Integer.toString(numberOfResults));
+        firstLine.add(" results found for: " + topics);
+        firstLine.add("");
+        results.add(0, firstLine);
+        
         request.setAttribute("results", results);
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
         view.forward(request,response);
