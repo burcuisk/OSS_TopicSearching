@@ -1,0 +1,70 @@
+
+Aim
+Yaptıklarını toparla, değerlendir, kendi gelişimini değerlendir
+Teknik detaylar, hangi temel kavramlara dayanıyor, ilişkili çalışmalar, teknik tasarım,
+nasıl çalıştıracaksın, ekonomi ve endüstriye katkılar(proje başından beri değiştiyse, ki değişmiş olmalı)
+herkesin ne yaptığı
+geribildirim
+
+Abstract
+Yaptığın işi birine kısaca anlatsan nasıl anlatırdın, öz bir şekilde
+neler yaptın, sonucu neydi
+4 kelime: hangi kategoride?
+
+Introduction
+Kapsamı, problem ne, hangi öneriyi getiriyorsun, nasıl yapılabiliyor
+
+Background
+Projenin anlaşılması için gereken temel bilgiler, kullandığın kaynakları metin içinde kullan(referans kısmında vereceklerin)
+
+Related work
+Daha önce yapılan benzer çalışmalar, sonuçlarıyla beraber, başarım oranlarıyla, hangi kısıtlarla beraber. Eğer önceki çalışmalar varsa, yaptığının katkısı ne?
+
+Method
+Ne kadar uyabildin tanımladığın metoda? Hangi adımları uyguladınız?
+
+Teknik Tasarım ve Konfigürasyon
+Senaryoları tanımla(ara tuşu), senaryonun input ve outputları(akış diyagramı kullanabilirsin), ürünün hedeflenen ortamda nasıl davrandığı
+
+Implementation
+Detaylar
+
+Validation and Results
+senaryonun adımlarını işlet, girdilerle hangi çıktıları veriyor? Screenshotlar olabilir
+(Sunumda demo görmek isteyecekler)
+Yaptığın karşılaştırmalar sonucunda başarılı çalışıyor mu?
+Bu sonuçlar hangi kapsamda elde edildi? Sonuçları etkileyen faktörler, ortam?
+
+Contributions
+ne kadar unique, katkısı ne, toparla
+verilen benzer çalışmalara kıyasla benzerlikler ve farklılıklar
+
+Innovative aspects
+Sonuç olarak elde ettiğin, gerçekleşen
+
+References
+Blog, web sayfası, en son ulaştığın tarih
+
+Changes to project plan
+Önceki raporlara göre değişim varsa(danışmanın haberdar olduğu)
+
+Milestones
+Hepsinin karşılanıp karşılanmadığı
+
+Measures
+
+Budget
+Planladığın girdi ve çıktılar(maliyet olarak)
+
+Riskler
+Gerçekleşen riskler, çözüm planı
+
+Self evaluation
+Projenin başarımını değerlendir
+Tecrübe ettiklerinle ilgili yorumlar(iyi gitti, şöyle bekledik böyle oldu)
+Ekstra yazmak istediğin
+
+Lessons learned
+Projeyi yeniden yapsaydın neleri farklı yapardın?
+
+Ders için feedback(kendi projene dayanarak)
