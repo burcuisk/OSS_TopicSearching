@@ -15,10 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 public class GetParameters extends HttpServlet {
@@ -35,20 +32,24 @@ public class GetParameters extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
         // TODO Auto-generated method stub
         response.setContentType("text/html;charset=UTF-8");
-       
+
         String repository = request.getParameter("repo");
+
+        if (request.getParameter("repo").equalsIgnoreCase("github") && request.getParameter("pl") == null ) {
+            request.setAttribute("err", "Please select programming language for Github and try again.");
+            RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+            view.forward(request,response);
+        }
+
         String selectedPL = request.getParameter("pl");
         String topics = request.getParameter("topic");
 
-        ArrayList<ArrayList<String>> results = process.processAndResults(topics,selectedPL,repository);
-        
-        int numberOfResults = results.size();
-        ArrayList<String> firstLine = new ArrayList<String>();
-        firstLine.add(Integer.toString(numberOfResults));
-        firstLine.add(" results found for: " + topics);
-        firstLine.add("");
-        results.add(0, firstLine);
-        
+        System.out.println("Repo: " + repository);
+        System.out.println("PL: " + selectedPL);
+        System.out.println("Features: " + topics);
+
+        ArrayList<ArrayList<String >> results = process.processAndResults(topics,selectedPL,repository);
+
         request.setAttribute("results", results);
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
         view.forward(request,response);

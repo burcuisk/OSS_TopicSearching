@@ -21,7 +21,7 @@ public class NLPProcesses {
             "myself","no","nor","of","or","only","other","ought","our","ourselves","out","over","own","same","she","should",
             "so","some","such","than","that","the","their","them","themselves","then","there","these","they","this","those",
             "through","to","too","under","until","up","very","was","we","were","what","when","where","which","while","who",
-            "whom","why","with","would","you","your","yourself","yourselves"  };
+            "whom","why","with","would","you","your","yourself","yourselves","application"  };
 
     public static final Set <String> STOP_WORDS = new HashSet<String>(Arrays.asList(SET_VALUES));
     public static double minProbability ;
@@ -31,9 +31,10 @@ public class NLPProcesses {
     Repository repo = null;
 
     public NLPProcesses() throws SQLException, ClassNotFoundException {}
-    
-    public ArrayList<String> getLangs () { return db.getLanguages(); }
-    
+
+    public ArrayList<String> getLangs () {
+        return db.getLanguages();
+    }
     public ArrayList<ArrayList<String >> processAndResults (String topics, String pl,String website) {
         db.lastSelectionId = 1;
         ArrayList<Repository> result = new ArrayList<Repository>();
@@ -49,7 +50,7 @@ public class NLPProcesses {
             if (website.equalsIgnoreCase("github"))
                 datas = db.selectRowsGithub(pl);
             else
-                datas = db.selectRowsSourceForge(pl);
+                datas = db.selectRowsSourceForge();
 
             // db row bitti sonucu döndür
             if (datas.size () == 0)

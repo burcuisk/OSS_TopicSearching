@@ -1,8 +1,9 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.GregorianCalendar" %>
+<%@ page import="com.oss.NLPProcesses" %>
 <%@ page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="com.oss.NLPProcesses" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -13,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>OSS Topic Search</title>     
         <link href="index.css" rel="stylesheet" type="text/css">
-		<script src="jquery-3.2.1.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<!-- Optional theme -->
@@ -47,33 +48,46 @@
 				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="topic"></textarea>
 			</div>
 
-			
-			<div class="form-group" id="pls"> 
-			<label for="exampleFormControlTextarea1">Select Language: </label> 
-			<% 
-			NLPProcesses a = new NLPProcesses(); 
-			ArrayList<String> pls = a.getLangs(); 
-			String pl; 
-			for (int i= 0 ; i<pls.size(); i++) { 
-				pl = pls.get(i); 
-				%> 
-			<label class="radio-inline">
-			<input type="radio" name="pl" value='<%=pl%>'><%=pl%></label> <% } %> 
+			<div class="form-group" id="pls">
+				<label for="exampleFormControlTextarea1">Select Language: </label>
+				<%
+					NLPProcesses a = new NLPProcesses();
+					ArrayList<String> pls = a.getLangs();
+					String pl;
+					for (int i= 0 ; i<pls.size(); i++) {
+					    pl = pls.get(i);
+				%>
+
+				<label class="radio-inline"><input type="radio" name="pl" value='<%=pl%>'><%=pl%></label>
+				<% } %>
 			</div>
-			
-			
+
 			<button type="submit"  onclick="showloader();" class="btn btn-primary btn-md" style="margin-left:40%;"><span class="glyphicon glyphicon-search"></span>&nbsp Search</button>
 
 		</form>
 	</div>
 
-	<div id="final">
-		<c:forEach items="${results}" var="result">
-			<c:out value="${result[0]} "></c:out>
-			<c:out value="${result[1]} "></c:out>
-			<c:out value="${result[2]}"></c:out>
-			<br><br>
-		</c:forEach>
+	<table>
+		<b style="margin-bottom:3%; text-align: center;"><c:out value="${err} "></c:out></b>
+	</table>
+
+	<div class="table-responsive" id="ress"  style="width:75%; margin-left:10%; margin-bottom:5%;">
+	<table class="table">
+		<thead>
+		<tr>
+			<th style="width:80%">Url</th>
+			<th >Probability</th>
+		</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${results}" var="result">
+				<tr>
+					<td  style="width:80%"><a href='<c:out value="${result[0]}"></c:out>'><c:out value="${result[0]}"></c:out></a></td>
+					<td><c:out value="${result[1]} "></c:out></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 	</div>
 
 	 <div id="loader" style="position:absolute; margin-left:42%; display:none;">
@@ -86,13 +100,18 @@
 	</body>
 
 	<script>
+
+
         function showloader() {
             var x = document.getElementById("loader");
             x.style.display ="block";
             var y = document.getElementById("search");
             y.style.display= "none";
+            var z = document.getElementById("ress");
+            z.style.display= "block";
         }
         function showstuff(boxid){
+            console.log("girdi")
 			document.getElementById(boxid).style.visibility="visible";
 		}
 			 
@@ -100,6 +119,7 @@
 			document.getElementById(boxid).style.visibility="hidden";
 		}
 	</script>
+
 	
 	
 </html>
