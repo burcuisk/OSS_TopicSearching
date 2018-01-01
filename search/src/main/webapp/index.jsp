@@ -1,6 +1,8 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.GregorianCalendar" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="com.oss.NLPProcesses" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -45,28 +47,34 @@
 				<textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="topic"></textarea>
 			</div>
 
-			<div class="form-group" id="pls">
-				<label for="exampleFormControlTextarea1">Select Language: </label>
-				<label class="radio-inline"><input type="radio" name="pl" value="C">C</label>
-				<label class="radio-inline"><input type="radio" name="pl" value="java">Java</label>
-				<label class="radio-inline"><input type="radio" name="pl" value="PHP">PHP</label>
-
+			
+			<div class="form-group" id="pls"> 
+			<label for="exampleFormControlTextarea1">Select Language: </label> 
+			<% 
+			NLPProcesses a = new NLPProcesses(); 
+			ArrayList<String> pls = a.getLangs(); 
+			String pl; 
+			for (int i= 0 ; i<pls.size(); i++) { 
+				pl = pls.get(i); 
+				%> 
+			<label class="radio-inline">
+			<input type="radio" name="pl" value='<%=pl%>'><%=pl%></label> <% } %> 
 			</div>
-
+			
+			
 			<button type="submit"  onclick="showloader();" class="btn btn-primary btn-md" style="margin-left:40%;"><span class="glyphicon glyphicon-search"></span>&nbsp Search</button>
 
 		</form>
 	</div>
 
-	<table>
+	<div id="final">
 		<c:forEach items="${results}" var="result">
 			<c:out value="${result[0]} "></c:out>
 			<c:out value="${result[1]} "></c:out>
-			<br>
 			<c:out value="${result[2]}"></c:out>
 			<br><br>
 		</c:forEach>
-	</table>
+	</div>
 
 	 <div id="loader" style="position:absolute; margin-left:42%; display:none;">
 		<div class="loader"></div>Searching Please Wait

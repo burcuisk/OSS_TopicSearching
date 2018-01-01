@@ -31,7 +31,9 @@ public class NLPProcesses {
     Repository repo = null;
 
     public NLPProcesses() throws SQLException, ClassNotFoundException {}
-
+    
+    public ArrayList<String> getLangs () { return db.getLanguages(); }
+    
     public ArrayList<ArrayList<String >> processAndResults (String topics, String pl,String website) {
         db.lastSelectionId = 1;
         ArrayList<Repository> result = new ArrayList<Repository>();

@@ -12,7 +12,21 @@ public class DbHelper {
 
     static int lastSelectionId = 1;
     Connection conn = null;
-
+    
+    public ArrayList<String> getLanguages() { 
+    	ArrayList<String> pl = new ArrayList<String>(); 
+    	String query = "SELECT DISTINCT pl FROM github_repository"; 
+    	Statement st = null; 
+    	try { st = conn.createStatement(); 
+    		ResultSet rs = st.executeQuery(query); 
+    		while (rs.next()) { 
+    			String pln = rs.getString("pl"); 
+    			pl.add(pln); 
+    			} 
+    	} catch (SQLException e) { e.printStackTrace(); } 
+    	
+    	return pl; 
+    }
     // database connection
     public DbHelper() throws ClassNotFoundException, SQLException {
 
@@ -25,7 +39,7 @@ public class DbHelper {
         }
 
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/oss_repos?verifyServerCertificate=false&useSSL=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "qweasdqwe");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/oss_repos?verifyServerCertificate=false&useSSL=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 
         } catch (SQLException e) {
             e.printStackTrace();
