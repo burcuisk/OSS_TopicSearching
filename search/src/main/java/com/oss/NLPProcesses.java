@@ -68,7 +68,7 @@ public class NLPProcesses {
 
                     if (prob >=  minProbability) {
                         repo = new Repository();
-                        repo.probability = prob;
+                        repo.probability = prob*100;
                         repo.repo_url = datas.get(i).get(1);
                         result.add(repo);
                     }
@@ -147,7 +147,7 @@ public class NLPProcesses {
         int intersect = test.size();
 
         // kesişim bölü birleşim
-        prob = (double)(intersect) / (double)(first+second-intersect);
+        prob = (double)(intersect) / (double)(first + second - intersect); 
 
         return prob;
     }

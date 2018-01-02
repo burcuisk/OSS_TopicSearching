@@ -94,7 +94,7 @@
     				<tbody>
     					<tr>
 							<td  style="width:80%"><a href='<c:out value="${result[0]}"></c:out>'><c:out value="${result[0]}"></c:out></a></td>
-							<td><c:out value="${result[1]} "></c:out></td>
+							<td>%<c:out value="${result[1]} "></c:out></td>
 						</tr>
 					</tbody>
     			</c:if>
