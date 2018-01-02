@@ -48,8 +48,21 @@ public class GetParameters extends HttpServlet {
         System.out.println("PL: " + selectedPL);
         System.out.println("Features: " + topics);
 
-        ArrayList<ArrayList<String >> results = process.processAndResults(topics,selectedPL,repository);
-
+        ArrayList<ArrayList<String>> results = process.processAndResults(topics,selectedPL,repository);
+        
+        if (results.size() == 0) {
+            ArrayList<String> repo = new ArrayList<String>() ;
+        	repo = new ArrayList<String>();
+        	repo.add("No results found.");
+        	repo.add("");
+        	results.add(repo);
+        } else {
+            ArrayList<String> repo = new ArrayList<String>() ;
+        	repo.add("Url");
+        	repo.add("Probability");
+        	results.add(0, repo);
+        }
+       
         request.setAttribute("results", results);
         RequestDispatcher view = request.getRequestDispatcher("index.jsp");
         view.forward(request,response);
@@ -58,5 +71,4 @@ public class GetParameters extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
         doGet(request,response);
     }
-}	
-
+} 
